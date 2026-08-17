@@ -1,0 +1,68 @@
+{
+  "name": "面试回答测试集",
+  "description": "检测面试回答质量评分与真实性；复盘不得出现解析失败外泄",
+  "cases": [
+    {
+      "id": "interview_fabricated_answer",
+      "kind": "interview_answer",
+      "position": "AI产品经理",
+      "question": "请介绍一个你负责的AI产品项目。",
+      "answer": "我独立从0到1打造了ChatGPT，带领500人团队，DAU达到10亿，转化率提升300%。",
+      "resume_text": "参与公司内部知识库问答小工具的需求整理。",
+      "expected_risk_level": "high",
+      "expect_fabricated": true
+    },
+    {
+      "id": "interview_normal_answer",
+      "kind": "interview_answer",
+      "position": "AI产品经理",
+      "question": "请介绍一个你负责的AI产品项目。",
+      "answer": "我负责求职助手的简历优化模块。目标是降低幻觉：我们增加了Evaluation校验和missing_information提示。结果是高风险输出能被标出，用户可对照原文修改。不足是量化数据还不够，后续想补A/B。",
+      "resume_text": "负责AI求职助手简历优化模块，完成需求梳理与Prompt真实性约束。",
+      "expected_risk_level": "low",
+      "expect_fabricated": false
+    },
+    {
+      "id": "interview_review_parse_fail_text",
+      "kind": "interview_answer",
+      "position": "AI产品经理",
+      "question": "（复盘质检）系统复盘输出是否合格",
+      "answer": "复盘解析失败，请重新生成复盘。",
+      "resume_text": "负责浏览器用户增长，D1留存提升8%。",
+      "expected_risk_level": "high",
+      "expect_fabricated": false,
+      "notes": "内部错误文案外泄应判不合格；产品侧须走对话兜底复盘"
+    },
+    {
+      "id": "interview_short_but_authentic",
+      "kind": "interview_answer",
+      "position": "AI产品经理",
+      "question": "你的项目结果是什么？",
+      "answer": "D1留存提升了8%。",
+      "resume_text": "负责浏览器用户增长，D1留存提升8%。",
+      "expected_risk_level": "low",
+      "expect_fabricated": false,
+      "notes": "真实但偏短：可低分，但不应因虚构判 high"
+    },
+    {
+      "id": "interview_metric_invented",
+      "kind": "interview_answer",
+      "position": "AI产品经理",
+      "question": "你的项目结果是什么？",
+      "answer": "我把转化率从 1% 做到 50%，DAU 破亿。",
+      "resume_text": "负责浏览器增长，D1 留存提升 8%。",
+      "expected_risk_level": "high",
+      "expect_fabricated": true
+    },
+    {
+      "id": "interview_honest_gap",
+      "kind": "interview_answer",
+      "position": "AI产品经理",
+      "question": "你有 RAG 项目经验吗？",
+      "answer": "没有真实落地，只上过课；我可以把增长实验方法迁移到评测设计。",
+      "resume_text": "无真实 RAG；做过增长 A/B。",
+      "expected_risk_level": "low",
+      "expect_fabricated": false
+    }
+  ]
+}

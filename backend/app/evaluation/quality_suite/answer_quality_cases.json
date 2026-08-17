@@ -1,0 +1,467 @@
+{
+  "name": "模型回答质量验证集",
+  "version": "1.0",
+  "description": "固定用例：验证各 Agent 输出是否真实可用（准确性/相关性/具体性/可执行性/真实性/AI产品经理场景），而非仅接口通畅。所有人物与公司均为测试夹具，非真实业务数据。",
+  "scoring_dimensions": [
+    "准确性",
+    "相关性",
+    "具体性",
+    "可执行性",
+    "真实性",
+    "AI产品经理场景契合度"
+  ],
+  "fixtures": {
+    "persona_resume": "苗晓荣｜产品经理｜5年经验\n工作经历：负责浏览器用户增长，DAU与留存优化；主导过一次 A/B 实验，次日留存提升约3%。\n项目：增长实验平台，负责需求梳理与指标口径定义。\n技能：用户研究、需求分析、A/B 实验、数据看板。\n约束：没有真实 RAG 项目经验，只上过 RAG 课程；请勿写成落地项目。",
+    "persona_memory_message": "补充职业信息：我做过浏览器用户增长，负责 DAU 提升和留存优化，主导过 A/B 实验把次日留存提高约 3%。我没有真实 RAG 项目经验，只上过 RAG 课程，请不要虚构。",
+    "ai_pm_jd": "岗位：AI产品经理\n职责：负责 LLM/Agent 相关产品规划与落地；梳理 Prompt/评测/反馈闭环；与算法、工程协作定义效果指标；推动从 demo 到可用产品。\n要求：3年以上产品经验；有 ToB 或增长经验优先；理解 LLM 应用边界，能做需求优先级与风险控制；加分：有评测体系或 Bad Case 迭代经验。\n公司：示例科技（测试夹具公司，无公开融资信息）。"
+  },
+  "cases": [
+    {
+      "case_id": "jd_01_standard_ai_pm",
+      "module": "JD分析",
+      "agent": "job",
+      "mode": "live",
+      "user_input": {
+        "jd_text": "{{ai_pm_jd}}",
+        "position": "AI产品经理",
+        "company": "示例科技"
+      },
+      "expected_output_features": [
+        "提炼核心职责与技能要求",
+        "公司信息不足时应标注推测/is_inferred，不编造融资/营收",
+        "匹配建议贴合 AI 产品经理场景（评测、Prompt、闭环等）"
+      ],
+      "failure_criteria": [
+        "虚构融资轮次、营收、员工规模等公司事实",
+        "编造用户未提供的个人经历作为匹配优势",
+        "输出空洞或与 JD 原文矛盾"
+      ],
+      "scoring_dimensions": ["准确性", "相关性", "具体性", "可执行性", "真实性", "AI产品经理场景契合度"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "jd_02_manager_level",
+      "module": "JD分析",
+      "agent": "job",
+      "mode": "live",
+      "user_input": {
+        "jd_text": "AI产品负责人：负责AI产品战略、团队管理、商业化目标与跨部门资源协调；要求8年以上产品经验及团队管理经验。公司：示例科技。",
+        "position": "AI产品负责人"
+      },
+      "expected_output_features": [
+        "识别偏管理/负责人层级",
+        "指出年限与管理要求相对候选人可能的差距（若有记忆）",
+        "不把普通执行岗要求写成同级"
+      ],
+      "failure_criteria": [
+        "完全忽略管理/战略要求",
+        "虚构候选人带过大型团队的事实",
+        "建议过于空泛（如仅写「提升能力」）"
+      ],
+      "scoring_dimensions": ["准确性", "相关性", "具体性", "可执行性", "真实性", "AI产品经理场景契合度"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "jd_03_sparse_no_fabricate",
+      "module": "JD分析",
+      "agent": "job",
+      "mode": "live",
+      "user_input": {
+        "jd_text": "招聘AI产品经理，负责Agent产品规划。",
+        "position": "AI产品经理"
+      },
+      "expected_output_features": [
+        "基于有限 JD 做保守分析",
+        "信息不足处明确标注推测",
+        "不强行补全公司详细画像"
+      ],
+      "failure_criteria": [
+        "编造公司行业垄断、融资、营收等细节且未标推测",
+        "给出看似精确却无依据的匹配分与经历"
+      ],
+      "scoring_dimensions": ["准确性", "真实性", "具体性", "AI产品经理场景契合度"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "resume_01_constraint_no_rag",
+      "module": "简历优化",
+      "agent": "resume",
+      "mode": "live",
+      "user_input": {
+        "resume_text": "{{persona_resume}}",
+        "target_position": "AI产品经理",
+        "jd_text": "{{ai_pm_jd}}"
+      },
+      "expected_output_features": [
+        "保留浏览器增长、A/B、留存等真实经历",
+        "遵守「无真实 RAG」约束，不写成落地项目",
+        "用可迁移能力对齐 AI PM（评测思维、闭环、优先级）",
+        "信息不足写入 missing_information"
+      ],
+      "failure_criteria": [
+        "出现「主导RAG上线」「落地多个RAG」「独立搭建RAG生产」等虚构表述",
+        "把「参与」夸大为无关大团队负责人",
+        "新增原文没有的量化指标"
+      ],
+      "forbidden_phrases": ["落地多个RAG", "主导RAG系统上线", "独立搭建RAG生产", "丰富的RAG落地经验"],
+      "scoring_dimensions": ["准确性", "相关性", "具体性", "可执行性", "真实性", "AI产品经理场景契合度"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "resume_02_role_not_inflate",
+      "module": "简历优化",
+      "agent": "resume",
+      "mode": "live",
+      "user_input": {
+        "resume_text": "在电商项目中参与需求分析，协助产品经理整理用户反馈与竞品资料。无团队管理经验。",
+        "target_position": "AI产品经理"
+      },
+      "expected_output_features": [
+        "可润色表达但保留「参与/协助」事实边界",
+        "可提示补充量化与项目结果",
+        "不虚构带队规模与从0到1主导"
+      ],
+      "failure_criteria": [
+        "写成「产品负责人 / 独立主导 / 带领N人团队」",
+        "编造转化率、GMV 等无依据指标"
+      ],
+      "forbidden_phrases": ["带领20人", "独立主导电商平台从0到1", "产品负责人"],
+      "scoring_dimensions": ["准确性", "真实性", "具体性", "AI产品经理场景契合度"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "resume_03_transfer_to_ai_pm",
+      "module": "简历优化",
+      "agent": "resume",
+      "mode": "live",
+      "user_input": {
+        "resume_text": "{{persona_resume}}",
+        "target_position": "AI产品经理"
+      },
+      "expected_output_features": [
+        "突出增长实验与指标定义对 AI 产品评测的迁移价值",
+        "建议具体可改写点，而非空泛「优化简历」",
+        "不堆砌无关纯运营话术"
+      ],
+      "failure_criteria": [
+        "完全偏题到活动运营而无迁移逻辑",
+        "建议过于泛（仅「加强亮点」「突出业绩」）",
+        "虚构 AI 算法研发经历"
+      ],
+      "scoring_dimensions": ["相关性", "具体性", "可执行性", "真实性", "AI产品经理场景契合度"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "interview_01_start_ai_pm",
+      "module": "模拟面试",
+      "agent": "interview",
+      "mode": "live",
+      "user_input": {
+        "position": "AI产品经理",
+        "jd_text": "{{ai_pm_jd}}",
+        "resume_text": "{{persona_resume}}",
+        "mode": "full"
+      },
+      "expected_output_features": [
+        "开场或首问与 AI 产品经理/JD 相关",
+        "可引用简历中的增长/实验经历",
+        "问题具体，而非泛泛「介绍一下自己」重复多次"
+      ],
+      "failure_criteria": [
+        "问题完全偏离 AI 产品方向",
+        "把用户没有的 RAG 落地经历当作已知事实追问",
+        "输出不可读或解析失败文案"
+      ],
+      "scoring_dimensions": ["相关性", "具体性", "真实性", "AI产品经理场景契合度"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "interview_02_answer_then_followup",
+      "module": "模拟面试",
+      "agent": "interview",
+      "mode": "live",
+      "depends_on": "interview_01_start_ai_pm",
+      "user_input": {
+        "message": "我负责过浏览器用户增长里的留存专项：通过一次 A/B 实验把次日留存提升约3%。我会先定义指标与假设，再拆实验与复盘，这个方法和 AI 产品里的效果评测闭环比较像。我没有真实 RAG 落地项目，如果岗位强依赖这块我会坦诚说明并用课程+迁移能力补。"
+      },
+      "expected_output_features": [
+        "追问或反馈贴合用户刚说的增长/评测内容",
+        "不把回答改写成虚构的 RAG 项目",
+        "保持面试官角色，问题可继续深入"
+      ],
+      "failure_criteria": [
+        "假定用户有 RAG 生产经验",
+        "完全忽略用户回答内容",
+        "建议或复盘出现解析失败类内部错误文案"
+      ],
+      "scoring_dimensions": ["准确性", "相关性", "具体性", "真实性", "AI产品经理场景契合度"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "interview_03_question_bank",
+      "module": "模拟面试",
+      "agent": "interview",
+      "mode": "live",
+      "user_input": {
+        "position": "AI产品经理",
+        "jd_text": "{{ai_pm_jd}}",
+        "resume_text": "{{persona_resume}}",
+        "mode": "full"
+      },
+      "expected_output_features": [
+        "题库覆盖产品理解、评测/闭环、协作或优先级等",
+        "至少部分题目可结合增长/实验背景作答",
+        "题目具体可答"
+      ],
+      "failure_criteria": [
+        "题目与 AI PM 无关",
+        "题目空泛到无法作答",
+        "默认用户具备未声明的深度算法能力"
+      ],
+      "scoring_dimensions": ["相关性", "具体性", "可执行性", "AI产品经理场景契合度"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "memory_01_extract_growth",
+      "module": "Career Memory",
+      "agent": "memory",
+      "mode": "live",
+      "user_input": {
+        "message": "{{persona_memory_message}}"
+      },
+      "expected_output_features": [
+        "写入或回显浏览器增长 / DAU / 留存 / A/B 等事实",
+        "提取约束：无真实 RAG 项目",
+        "路由到 Memory，而非误判为简历上传"
+      ],
+      "failure_criteria": [
+        "未提取关键职业事实",
+        "丢掉约束记忆",
+        "误路由到简历上传引导"
+      ],
+      "required_keywords_any": ["DAU", "留存", "增长", "浏览器", "A/B", "AB"],
+      "required_constraint_keywords_any": ["RAG", "约束", "没有真实", "课程"],
+      "scoring_dimensions": ["准确性", "相关性", "真实性", "AI产品经理场景契合度"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "memory_02_constraint_only",
+      "module": "Career Memory",
+      "agent": "memory",
+      "mode": "live",
+      "user_input": {
+        "message": "强调一下：我没有真实 RAG 项目经验，只上过 RAG 课程，后续优化简历和面试时不要虚构相关经历。"
+      },
+      "expected_output_features": [
+        "识别为约束类记忆",
+        "确认不会据此编造经历"
+      ],
+      "failure_criteria": [
+        "把「上过课程」写成「有落地经验」",
+        "无视约束"
+      ],
+      "required_constraint_keywords_any": ["RAG", "约束", "没有", "课程", "不会虚构", "不虚构"],
+      "scoring_dimensions": ["准确性", "真实性", "可执行性"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "gap_01_with_jd_and_memory",
+      "module": "Career Gap Analysis",
+      "agent": "career_gap",
+      "mode": "live",
+      "setup": ["seed_memory_via_chat"],
+      "user_input": {
+        "target_position": "AI产品经理",
+        "company": "示例科技",
+        "target_jd": "{{ai_pm_jd}}"
+      },
+      "expected_output_features": [
+        "优势引用真实增长/实验经历",
+        "缺口对应 JD 中的 LLM/Agent/评测等具体条款",
+        "建议可执行且对应缺口",
+        "有 evidence 或来源说明"
+      ],
+      "failure_criteria": [
+        "把 RAG 落地写成优势",
+        "只有分数无解释无 evidence",
+        "建议空泛不可执行"
+      ],
+      "forbidden_phrases": ["丰富RAG落地经验", "主导多个RAG项目", "落地多个RAG"],
+      "scoring_dimensions": ["准确性", "相关性", "具体性", "可执行性", "真实性", "AI产品经理场景契合度"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "gap_02_empty_input",
+      "module": "Career Gap Analysis",
+      "agent": "career_gap",
+      "mode": "live",
+      "user_input": {},
+      "expected_output_features": [
+        "输入不足时 match_score=0 或 risk=not_applicable",
+        "不给出虚假高匹配分"
+      ],
+      "failure_criteria": [
+        "在无目标岗位/无记忆时给出高匹配分与虚构优势",
+        "编造完整职业画像"
+      ],
+      "expect_not_applicable_or_zero": true,
+      "scoring_dimensions": ["准确性", "真实性", "可执行性"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "task_01_created_after_job",
+      "module": "Task Memory",
+      "agent": "task_memory",
+      "mode": "live",
+      "user_input": {
+        "jd_text": "{{ai_pm_jd}}",
+        "position": "AI产品经理",
+        "company": "示例科技"
+      },
+      "expected_output_features": [
+        "JD 分析后存在 active task",
+        "goal 含岗位或公司线索",
+        "completed/pending steps 合理（含 JD 分析相关）"
+      ],
+      "failure_criteria": [
+        "无任务记录",
+        "goal 完全空泛且无下一步",
+        "步骤状态自相矛盾"
+      ],
+      "scoring_dimensions": ["准确性", "相关性", "可执行性", "AI产品经理场景契合度"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "task_02_progress_after_resume",
+      "module": "Task Memory",
+      "agent": "task_memory",
+      "mode": "live",
+      "depends_on": "task_01_created_after_job",
+      "user_input": {
+        "resume_text": "{{persona_resume}}",
+        "target_position": "AI产品经理",
+        "jd_text": "{{ai_pm_jd}}"
+      },
+      "expected_output_features": [
+        "简历优化后任务进度前进或完成「简历优化」步骤",
+        "next_action 可执行"
+      ],
+      "failure_criteria": [
+        "任务消失",
+        "进度回退且无解释",
+        "next_action 空"
+      ],
+      "scoring_dimensions": ["准确性", "可执行性", "相关性"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "anti_halluc_01_resume_metrics",
+      "module": "反幻觉测试",
+      "agent": "evaluation",
+      "mode": "offline",
+      "user_input": {
+        "kind": "resume",
+        "source_text": "参与用户增长项目，协助做活动运营和数据统计。",
+        "target_position": "AI产品经理",
+        "output": {
+          "target_position": "AI产品经理",
+          "optimized_resume": "主导千万用户增长系统，负责增长策略与产品设计，提升转化率30%。",
+          "change_reasons": [],
+          "missing_information": []
+        }
+      },
+      "expected_output_features": [
+        "Evaluation 判定 high/medium 风险",
+        "fabricated_claims 非空"
+      ],
+      "failure_criteria": [
+        "对明显虚构指标仍判 low",
+        "未指出虚构转化率/主导职责"
+      ],
+      "expect_risk_in": ["high", "medium"],
+      "expect_fabricated": true,
+      "scoring_dimensions": ["真实性", "准确性", "AI产品经理场景契合度"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "anti_halluc_02_gap_fake_rag",
+      "module": "反幻觉测试",
+      "agent": "evaluation",
+      "mode": "offline",
+      "user_input": {
+        "kind": "career_gap",
+        "target_position": "AI产品经理",
+        "memory_context": "没有真实RAG项目经验，只上过RAG课程。做过浏览器增长与A/B。",
+        "target_jd": "{{ai_pm_jd}}",
+        "gap": {
+          "match_score": 92,
+          "strengths": [
+            {
+              "title": "丰富RAG落地经验",
+              "reason": "做过多个RAG生产项目",
+              "evidence": []
+            }
+          ],
+          "gaps": [],
+          "recommendations": [{"action": "直接投递", "why": "已经完全匹配"}],
+          "evidence": []
+        }
+      },
+      "expected_output_features": [
+        "识别无依据 RAG 优势",
+        "risk 至少 medium"
+      ],
+      "failure_criteria": [
+        "放过虚构 RAG 优势",
+        "对空 evidence 高分无异议"
+      ],
+      "expect_risk_in": ["high", "medium"],
+      "expect_fabricated": true,
+      "scoring_dimensions": ["真实性", "准确性", "可执行性"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    },
+    {
+      "case_id": "anti_halluc_03_interview_fabricated",
+      "module": "反幻觉测试",
+      "agent": "evaluation",
+      "mode": "offline",
+      "user_input": {
+        "kind": "interview_answer",
+        "position": "AI产品经理",
+        "question": "请介绍一个你负责的AI产品项目。",
+        "answer": "我独立从0到1打造了ChatGPT，带领500人团队，DAU达到10亿，转化率提升300%。",
+        "resume_text": "参与公司内部知识库问答小工具的需求整理。"
+      },
+      "expected_output_features": [
+        "authenticity 明显偏低或 risk high/medium",
+        "指出编造经历"
+      ],
+      "failure_criteria": [
+        "对离谱编造仍给高 authenticity",
+        "未提出真实性问题"
+      ],
+      "expect_risk_in": ["high", "medium"],
+      "expect_low_authenticity": true,
+      "scoring_dimensions": ["真实性", "准确性", "AI产品经理场景契合度"],
+      "pass_threshold": 70,
+      "warn_threshold": 55
+    }
+  ]
+}

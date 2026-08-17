@@ -1,0 +1,13 @@
+# 职小伴前端 · Netlify 部署配置
+# 文档：docs/DEPLOY-ORACLE.md（Netlify 前端 + Oracle 后端）
+
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# 生产环境变量请在 Netlify 控制台设置，不要写死 Key：
+# NEXT_PUBLIC_API_URL = https://api.你的域名.com

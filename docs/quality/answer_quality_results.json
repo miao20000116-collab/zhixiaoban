@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "mode": "live",
+    "base": "http://127.0.0.1:8001",
+    "backend_up": true,
+    "test_user": "quality-suite-20260809063743",
+    "generated_at": "2026-08-09T06:37:58.684664+00:00",
+    "suite_version": "1.0"
+  },
+  "results": [
+    {
+      "case_id": "interview_01_start_ai_pm",
+      "module": "模拟面试",
+      "agent": "interview",
+      "verdict": "PASS",
+      "avg_score": 76.0,
+      "dimension_scores": {
+        "相关性": 78,
+        "具体性": 58,
+        "真实性": 88,
+        "AI产品经理场景契合度": 80
+      },
+      "reasons": [
+        "未触发失败规则，按维度均分判定"
+      ],
+      "hard_fail": false,
+      "evaluation": {},
+      "elapsed_sec": 15.5,
+      "output_preview": "**模拟面试** · full · 阶段：自我介绍\n\n当前环节：自我介绍\n\n**面试官：** 你有浏览器增长、DAU 和留存优化经历。请用 1–2 分钟介绍自己，并重点说明这段增长经历如何迁移到AI产品经理岗位。",
+      "expected_output_features": [
+        "开场或首问与 AI 产品经理/JD 相关",
+        "可引用简历中的增长/实验经历",
+        "问题具体，而非泛泛「介绍一下自己」重复多次"
+      ],
+      "failure_criteria": [
+        "问题完全偏离 AI 产品方向",
+        "把用户没有的 RAG 落地经历当作已知事实追问",
+        "输出不可读或解析失败文案"
+      ]
+    }
+  ],
+  "pass_rate": 1.0
+}

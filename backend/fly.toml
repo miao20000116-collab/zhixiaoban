@@ -1,0 +1,31 @@
+# Fly.io — 职小办后端（0 元：Neon DB + Fly 免费档）
+app = "zhixiaoban-api"
+primary_region = "sin"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  OPENAI_API_BASE = "https://api.deepseek.com/v1"
+  MODEL_NAME = "deepseek-v4-flash"
+  CORS_ORIGINS = "https://frontend-tawny-seven-27.vercel.app,http://localhost:3000"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "60s"
+    method = "GET"
+    path = "/api/health"
+
+[[vm]]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1

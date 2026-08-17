@@ -1,0 +1,201 @@
+{
+  "name": "JD分析测试集",
+  "description": "检测 Job Agent 是否虚构公司/行业事实，或编造用户经历匹配；线索分析与管理岗应可兜底",
+  "cases": [
+    {
+      "id": "job_fabricated_company",
+      "kind": "job",
+      "jd_text": "招聘AI产品经理，负责Agent产品规划。",
+      "search_context": "（无可靠搜索结果）",
+      "analysis": {
+        "position_overview": {
+          "position": "AI产品经理",
+          "company": "虚构宇宙科技",
+          "industry": "航天",
+          "summary": "该公司已完成D轮融资并垄断全球Agent市场"
+        },
+        "core_responsibilities": [
+          "负责Agent产品"
+        ],
+        "required_skills": [
+          "产品设计"
+        ],
+        "company_analysis": {
+          "overview": "全球第一大AI公司，员工10万人，年营收千亿",
+          "is_inferred": false,
+          "sources": []
+        },
+        "user_match": {
+          "score": 95,
+          "strengths": [
+            "曾主导OpenAI核心产品"
+          ],
+          "gaps": [],
+          "suggestions": []
+        }
+      },
+      "expected_risk_level": "high",
+      "expect_fabricated": true
+    },
+    {
+      "id": "job_normal_jd",
+      "kind": "job",
+      "jd_text": "某互联网公司招聘AI产品经理，要求有ToB产品经验，熟悉LLM应用。",
+      "search_context": "公开信息有限，仅确认该公司为互联网行业。",
+      "analysis": {
+        "position_overview": {
+          "position": "AI产品经理",
+          "company": "某互联网公司",
+          "industry": "互联网",
+          "summary": "负责LLM应用相关产品"
+        },
+        "core_responsibilities": [
+          "LLM应用产品规划"
+        ],
+        "required_skills": [
+          "ToB产品",
+          "LLM应用"
+        ],
+        "company_analysis": {
+          "overview": "公开信息有限，暂无法确认详细业务",
+          "is_inferred": true,
+          "sources": []
+        },
+        "user_match": {
+          "score": 60,
+          "strengths": [
+            "有产品经验（基于用户档案）"
+          ],
+          "gaps": [
+            "需补充ToB案例细节"
+          ],
+          "suggestions": [
+            "补充LLM相关项目"
+          ]
+        }
+      },
+      "expected_risk_level": "low",
+      "expect_fabricated": false
+    },
+    {
+      "id": "job_clue_only_should_mark_inferred",
+      "kind": "job",
+      "jd_text": "",
+      "search_context": "无完整JD，仅有岗位线索：AI产品经理 @ 字节跳动",
+      "analysis": {
+        "position_overview": {
+          "position": "AI产品经理",
+          "company": "字节跳动",
+          "industry": "互联网",
+          "summary": "以下为基于岗位/公司线索的推测分析，非正式 JD 全文解析。"
+        },
+        "core_responsibilities": [
+          "围绕AI产品经理推进产品规划与落地"
+        ],
+        "required_skills": [
+          "产品规划",
+          "需求分析"
+        ],
+        "company_analysis": {
+          "overview": "需结合公开信息进一步核实",
+          "is_inferred": true,
+          "sources": [
+            "岗位线索推测"
+          ]
+        },
+        "user_match": {
+          "score": 0,
+          "strengths": [
+            "可基于已有产品经验迁移"
+          ],
+          "gaps": [
+            "完整JD缺失"
+          ],
+          "suggestions": [
+            "补充完整JD后重跑"
+          ]
+        }
+      },
+      "expected_risk_level": "low",
+      "expect_fabricated": false
+    },
+    {
+      "id": "job_manager_title",
+      "kind": "job",
+      "jd_text": "AI产品负责人：负责AI产品战略、团队管理、商业化目标、跨部门资源协调，要求8年以上产品经验和团队管理经验。",
+      "search_context": "公开信息有限",
+      "analysis": {
+        "position_overview": {
+          "position": "AI产品负责人",
+          "company": null,
+          "industry": "互联网/AI",
+          "level": "高级/负责人",
+          "summary": "负责人岗，强调战略、团队管理与商业化"
+        },
+        "core_responsibilities": [
+          "AI产品战略",
+          "团队管理",
+          "商业化目标"
+        ],
+        "required_skills": [
+          "产品",
+          "团队管理"
+        ],
+        "company_analysis": {
+          "overview": "公司未提供",
+          "is_inferred": true,
+          "sources": []
+        },
+        "user_match": {
+          "score": 45,
+          "strengths": [
+            "有产品经验"
+          ],
+          "gaps": [
+            "团队管理与战略落地经验需核验"
+          ],
+          "suggestions": [
+            "补充管理案例"
+          ]
+        }
+      },
+      "expected_risk_level": "low",
+      "expect_fabricated": false
+    },
+    {
+      "id": "job_user_match_fabricated",
+      "kind": "job",
+      "jd_text": "招聘 AI 产品经理，要求 Agent 产品经验。",
+      "search_context": "公开信息有限",
+      "analysis": {
+        "position_overview": {
+          "position": "AI产品经理",
+          "company": "某公司",
+          "industry": "互联网",
+          "summary": "Agent 产品方向"
+        },
+        "core_responsibilities": [
+          "Agent 产品"
+        ],
+        "required_skills": [
+          "产品"
+        ],
+        "company_analysis": {
+          "overview": "信息有限",
+          "is_inferred": true,
+          "sources": []
+        },
+        "user_match": {
+          "score": 90,
+          "strengths": [
+            "主导过多个 RAG 生产项目"
+          ],
+          "gaps": [],
+          "suggestions": []
+        }
+      },
+      "expected_risk_level": "high",
+      "expect_fabricated": true
+    }
+  ]
+}

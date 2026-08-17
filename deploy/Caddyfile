@@ -1,0 +1,15 @@
+# 全栈：一个域名同时服务前端 + 后端 API
+{$DOMAIN} {
+	encode gzip
+
+	handle /backend-api/* {
+		uri strip_prefix /backend-api
+		reverse_proxy backend:8000
+	}
+
+	handle /media/* {
+		reverse_proxy backend:8000
+	}
+
+	reverse_proxy frontend:3000
+}

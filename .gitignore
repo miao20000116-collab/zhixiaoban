@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Environment
+.env
+.env.local
+.env.*.local
+deploy/.env
+
+# Local export dumps
+docs/_export_interview.txt
+
+# Build
+.next/
+out/
+dist/
+build/
+*.egg-info/
+
+# Local code index
+.codegraph/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+
+# Generated media (TTS / interview recordings)
+backend/data/audio/
+data/audio/
+*.webm
+*.mp3
+
+# Logs
+*.log
+npm-debug.log*
+
+# Docker
+docker-compose.override.yml

@@ -1,0 +1,384 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-ui);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-ui);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* ---------- Seasonal Morandi atmospheres ---------- */
+:root,
+[data-season="spring"] {
+  --season-bg-1: #e7efe8;
+  --season-bg-2: #f3ebe6;
+  --season-bg-3: #dfe9e3;
+  --season-accent: #8fa896;
+  --season-accent-fg: #f7faf7;
+  --season-panel: color-mix(in srgb, #f7faf8 78%, transparent);
+  --season-border: color-mix(in srgb, #9bb0a2 28%, transparent);
+  --season-quote: #5f6f64;
+  --season-glow: color-mix(in srgb, #c8d9c4 55%, transparent);
+  --season-glow-2: color-mix(in srgb, #e8ddd8 42%, transparent);
+  --season-pop: #e8ddd8;
+  --season-pop-fg: #3f3734;
+  --season-composer: linear-gradient(
+    145deg,
+    color-mix(in srgb, #f8fbf8 92%, transparent),
+    color-mix(in srgb, #f3ebe6 55%, transparent) 55%,
+    color-mix(in srgb, #e7efe8 70%, transparent)
+  );
+
+  --background: #eef4ef;
+  --foreground: #2f3833;
+  --card: color-mix(in srgb, #f8fbf8 88%, transparent);
+  --card-foreground: #2f3833;
+  --popover: #f7faf8;
+  --popover-foreground: #2f3833;
+  --primary: #5f7a68;
+  --primary-foreground: #f7faf7;
+  --secondary: #e3ebe4;
+  --secondary-foreground: #3a463f;
+  --muted: #e4ebe5;
+  --muted-foreground: #66756c;
+  --accent: #e8ddd8;
+  --accent-foreground: #3f3734;
+  --destructive: #b56b63;
+  --border: color-mix(in srgb, #9bb0a2 32%, transparent);
+  --input: color-mix(in srgb, #9bb0a2 36%, transparent);
+  --ring: #8fa896;
+  --radius: 0.75rem;
+  --sidebar: color-mix(in srgb, #f4f8f5 72%, transparent);
+  --sidebar-foreground: #2f3833;
+  --sidebar-primary: #5f7a68;
+  --sidebar-primary-foreground: #f7faf7;
+  --sidebar-accent: #e5eee7;
+  --sidebar-accent-foreground: #2f3833;
+  --sidebar-border: color-mix(in srgb, #9bb0a2 28%, transparent);
+  --sidebar-ring: #8fa896;
+  --chart-1: #8fa896;
+  --chart-2: #c4a99a;
+  --chart-3: #7f95a3;
+  --chart-4: #b7a6c2;
+  --chart-5: #d2c3a8;
+}
+
+[data-season="summer"] {
+  /* 清透雾蓝 + 浅暖沙的轻渐变，保留春同款的层次感 */
+  --season-bg-1: #e3eef4;
+  --season-bg-2: #f2efe6;
+  --season-bg-3: #d8e8f0;
+  --season-accent: #7f9fad;
+  --season-accent-fg: #f5fafb;
+  --season-panel: color-mix(in srgb, #f5fafb 78%, transparent);
+  --season-border: color-mix(in srgb, #8aa3b0 28%, transparent);
+  --season-quote: #4f6672;
+  --season-glow: color-mix(in srgb, #b9d2dc 58%, transparent);
+  --season-glow-2: color-mix(in srgb, #f0e6d0 40%, transparent);
+  --season-pop: #f3ead8;
+  --season-pop-fg: #4a3f2e;
+  --season-composer: linear-gradient(
+    145deg,
+    color-mix(in srgb, #f6fbfd 92%, transparent),
+    color-mix(in srgb, #f3ead8 48%, transparent) 58%,
+    color-mix(in srgb, #e3eef4 72%, transparent)
+  );
+
+  --background: #eaf2f6;
+  --foreground: #2c3a42;
+  --card: color-mix(in srgb, #f6fbfd 88%, transparent);
+  --card-foreground: #2c3a42;
+  --popover: #f5fafb;
+  --popover-foreground: #2c3a42;
+  --primary: #5d7e8c;
+  --primary-foreground: #f5fafb;
+  --secondary: #dce8ee;
+  --secondary-foreground: #334650;
+  --muted: #dde8ed;
+  --muted-foreground: #607681;
+  --accent: #f3ead8;
+  --accent-foreground: #4a3f2e;
+  --destructive: #b56b63;
+  --border: color-mix(in srgb, #8aa3b0 32%, transparent);
+  --input: color-mix(in srgb, #8aa3b0 36%, transparent);
+  --ring: #7f9fad;
+  --sidebar: color-mix(in srgb, #f2f8fb 72%, transparent);
+  --sidebar-foreground: #2c3a42;
+  --sidebar-primary: #5d7e8c;
+  --sidebar-primary-foreground: #f5fafb;
+  --sidebar-accent: #f3ead8;
+  --sidebar-accent-foreground: #4a3f2e;
+  --sidebar-border: color-mix(in srgb, #8aa3b0 28%, transparent);
+  --sidebar-ring: #7f9fad;
+  --chart-1: #7f9fad;
+  --chart-2: #e0b56a;
+  --chart-3: #8fad9c;
+  --chart-4: #c4a99a;
+  --chart-5: #9aa3b8;
+}
+
+[data-season="autumn"] {
+  /* 陶土暖灰 + 一点苔绿余韵 */
+  --season-bg-1: #efe8df;
+  --season-bg-2: #e9e6df;
+  --season-bg-3: #e6ddd2;
+  --season-accent: #a89078;
+  --season-accent-fg: #faf6f1;
+  --season-panel: color-mix(in srgb, #faf6f1 78%, transparent);
+  --season-border: color-mix(in srgb, #b5a28e 28%, transparent);
+  --season-quote: #6a5b4d;
+  --season-glow: color-mix(in srgb, #d8c4ae 55%, transparent);
+  --season-glow-2: color-mix(in srgb, #cfd8c8 38%, transparent);
+  --season-pop: #e5ebe3;
+  --season-pop-fg: #364038;
+  --season-composer: linear-gradient(
+    145deg,
+    color-mix(in srgb, #faf6f1 92%, transparent),
+    color-mix(in srgb, #e5ebe3 50%, transparent) 55%,
+    color-mix(in srgb, #efe8df 70%, transparent)
+  );
+
+  --background: #f0e9e1;
+  --foreground: #3a322c;
+  --card: color-mix(in srgb, #faf6f1 88%, transparent);
+  --card-foreground: #3a322c;
+  --popover: #faf6f1;
+  --popover-foreground: #3a322c;
+  --primary: #8a735c;
+  --primary-foreground: #faf6f1;
+  --secondary: #e6ddd3;
+  --secondary-foreground: #433930;
+  --muted: #e7ded4;
+  --muted-foreground: #726457;
+  --accent: #e5ebe3;
+  --accent-foreground: #364038;
+  --destructive: #b56b63;
+  --border: color-mix(in srgb, #b5a28e 34%, transparent);
+  --input: color-mix(in srgb, #b5a28e 38%, transparent);
+  --ring: #a89078;
+  --sidebar: color-mix(in srgb, #f7f1ea 72%, transparent);
+  --sidebar-foreground: #3a322c;
+  --sidebar-primary: #8a735c;
+  --sidebar-primary-foreground: #faf6f1;
+  --sidebar-accent: #ebe3d9;
+  --sidebar-accent-foreground: #3a322c;
+  --sidebar-border: color-mix(in srgb, #b5a28e 28%, transparent);
+  --sidebar-ring: #a89078;
+  --chart-1: #a89078;
+  --chart-2: #8f9d84;
+  --chart-3: #9aa3b8;
+  --chart-4: #c4a99a;
+  --chart-5: #7f95a3;
+}
+
+[data-season="winter"] {
+  /* 冷雾靛蓝 + 淡紫余晖，避免一片平涂 */
+  --season-bg-1: #e4e8f2;
+  --season-bg-2: #ebe8f2;
+  --season-bg-3: #d7dde9;
+  --season-accent: #6b7ea0;
+  --season-accent-fg: #f5f7fc;
+  --season-panel: color-mix(in srgb, #f4f6fb 78%, transparent);
+  --season-border: color-mix(in srgb, #8b97b0 30%, transparent);
+  --season-quote: #4a556c;
+  --season-glow: color-mix(in srgb, #b7c0d4 55%, transparent);
+  --season-glow-2: color-mix(in srgb, #d4cde3 36%, transparent);
+  --season-pop: #dde5f0;
+  --season-pop-fg: #2a3140;
+  --season-composer: linear-gradient(
+    145deg,
+    color-mix(in srgb, #f5f7fc 92%, transparent),
+    color-mix(in srgb, #ebe8f2 52%, transparent) 55%,
+    color-mix(in srgb, #e4e8f2 72%, transparent)
+  );
+
+  --background: #e8ebf3;
+  --foreground: #2a3140;
+  --card: color-mix(in srgb, #f5f7fc 88%, transparent);
+  --card-foreground: #2a3140;
+  --popover: #f5f7fc;
+  --popover-foreground: #2a3140;
+  --primary: #5a6b8c;
+  --primary-foreground: #f5f7fc;
+  --secondary: #dce1ec;
+  --secondary-foreground: #343c4d;
+  --muted: #dee3ed;
+  --muted-foreground: #616b80;
+  --accent: #e6e2ee;
+  --accent-foreground: #3a3646;
+  --destructive: #b56b63;
+  --border: color-mix(in srgb, #8b97b0 34%, transparent);
+  --input: color-mix(in srgb, #8b97b0 38%, transparent);
+  --ring: #6b7ea0;
+  --sidebar: color-mix(in srgb, #f0f2f8 72%, transparent);
+  --sidebar-foreground: #2a3140;
+  --sidebar-primary: #5a6b8c;
+  --sidebar-primary-foreground: #f5f7fc;
+  --sidebar-accent: #e2e6f0;
+  --sidebar-accent-foreground: #2a3140;
+  --sidebar-border: color-mix(in srgb, #8b97b0 28%, transparent);
+  --sidebar-ring: #6b7ea0;
+  --chart-1: #6b7ea0;
+  --chart-2: #9aa3b8;
+  --chart-3: #a89078;
+  --chart-4: #7f95a3;
+  --chart-5: #b7a6c2;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+  }
+  body {
+    @apply text-foreground antialiased;
+    background-color: var(--background);
+    background-image:
+      radial-gradient(ellipse 78% 52% at 10% -8%, var(--season-glow), transparent 58%),
+      radial-gradient(ellipse 62% 48% at 92% 8%, var(--season-glow-2), transparent 55%),
+      radial-gradient(ellipse 70% 50% at 88% 100%, var(--season-bg-2), transparent 52%),
+      linear-gradient(165deg, var(--season-bg-1), var(--season-bg-3) 48%, var(--season-bg-2));
+    background-attachment: fixed;
+    transition:
+      background-color 0.55s ease,
+      color 0.35s ease;
+  }
+
+  /*
+   * Hairline scrollbars — keep chrome quiet so content stays first.
+   * Applies to every scrollable pane (chat / sidebar / profile).
+   */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--foreground) 18%, transparent) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 4px 0;
+  }
+  *::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--foreground) 16%, transparent);
+    border: 1px solid transparent;
+    background-clip: padding-box;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--season-accent) 55%, transparent);
+    background-clip: padding-box;
+  }
+  *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
+@layer utilities {
+  .atmosphere-panel {
+    background: var(--season-panel);
+    border-color: var(--season-border);
+    backdrop-filter: blur(10px);
+  }
+
+  .composer-shell {
+    background-image: var(--season-composer);
+    border-color: var(--season-border);
+    box-shadow:
+      0 1px 0 color-mix(in srgb, white 55%, transparent) inset,
+      0 10px 28px color-mix(in srgb, var(--foreground) 5%, transparent);
+    backdrop-filter: blur(12px);
+  }
+
+  .atmosphere-shell {
+    animation: season-breathe 14s ease-in-out infinite;
+  }
+
+  @keyframes season-breathe {
+    0%,
+    100% {
+      filter: saturate(1);
+    }
+    50% {
+      filter: saturate(1.06);
+    }
+  }
+}

@@ -1,0 +1,32 @@
+# Render Blueprint — 职小伴后端（0 元：Neon 外部数据库 + Render 免费 Web Service）
+# 前置：在 https://neon.tech 创建 PostgreSQL 16，复制连接串
+# Dashboard → New Blueprint → 粘贴本文件 → 手动填写 sync:false 的环境变量
+
+services:
+  - type: web
+    name: zhixiaoban-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: bash scripts/start_render.sh
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: VECTOR_DATABASE_URL
+        sync: false
+      - key: OPENAI_API_BASE
+        value: https://api.deepseek.com/v1
+      - key: MODEL_NAME
+        value: deepseek-v4-flash
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: CORS_ORIGINS
+        value: https://frontend-tawny-seven-27.vercel.app,http://localhost:3000
+      - key: MEDIA_BASE_URL
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: SPEECH_API_KEY
+        sync: false

@@ -1,0 +1,5 @@
+# 仅后端 API（前端在 Netlify）
+{$DOMAIN} {
+	encode gzip
+	reverse_proxy backend:8000
+}

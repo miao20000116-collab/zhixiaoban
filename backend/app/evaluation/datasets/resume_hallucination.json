@@ -1,0 +1,145 @@
+{
+  "name": "简历幻觉测试集",
+  "description": "检测 Resume Agent 输出是否虚构项目/数据/夸大职责；正常改写与合理归纳不应误判",
+  "cases": [
+    {
+      "id": "resume_hallucination_metrics",
+      "kind": "resume",
+      "task": "optimize",
+      "source_text": "参与用户增长项目，协助做活动运营和数据统计。",
+      "target_position": "AI产品经理",
+      "output": {
+        "target_position": "AI产品经理",
+        "optimized_resume": "主导千万用户增长系统，负责增长策略与产品设计，提升转化率30%。",
+        "change_reasons": [],
+        "missing_information": []
+      },
+      "expected_risk_level": "high",
+      "expect_fabricated": true
+    },
+    {
+      "id": "resume_role_inflation",
+      "kind": "resume",
+      "task": "optimize",
+      "source_text": "在电商项目中参与需求分析，协助产品经理整理用户反馈。",
+      "target_position": "产品经理",
+      "output": {
+        "target_position": "产品经理",
+        "optimized_resume": "作为产品负责人，独立主导电商平台从0到1，带领20人团队完成全链路重构。",
+        "change_reasons": [],
+        "missing_information": []
+      },
+      "expected_risk_level": "high",
+      "expect_fabricated": true
+    },
+    {
+      "id": "resume_metric_300",
+      "kind": "resume",
+      "task": "optimize",
+      "source_text": "负责浏览器增长，D1留存提升8%。",
+      "target_position": "AI产品经理",
+      "output": {
+        "target_position": "AI产品经理",
+        "optimized_resume": "负责浏览器增长，推动核心指标提升300%，并主导RAG召回率提升。",
+        "change_reasons": [],
+        "missing_information": []
+      },
+      "expected_risk_level": "high",
+      "expect_fabricated": true
+    },
+    {
+      "id": "resume_normal_rewrite",
+      "kind": "resume",
+      "task": "optimize",
+      "source_text": "负责AI求职助手的简历优化模块，完成需求梳理、流程设计与Prompt约束，推动上线。",
+      "target_position": "AI产品经理",
+      "output": {
+        "target_position": "AI产品经理",
+        "optimized_resume": "负责AI求职助手简历优化模块：完成需求梳理、流程设计与Prompt真实性约束，并推动功能上线。",
+        "change_reasons": [
+          {
+            "original": "完成需求梳理、流程设计与Prompt约束",
+            "revised": "完成需求梳理、流程设计与Prompt真实性约束",
+            "reason": "突出质量控制能力"
+          }
+        ],
+        "missing_information": []
+      },
+      "expected_risk_level": "low",
+      "expect_fabricated": false
+    },
+    {
+      "id": "resume_reasonable_summarize",
+      "kind": "resume",
+      "task": "optimize",
+      "source_text": "负责浏览器用户增长；做过新用户增长项目，D1留存提升8%，入口CTR提升12%。",
+      "target_position": "增长产品经理",
+      "output": {
+        "target_position": "增长产品经理",
+        "optimized_resume": "负责浏览器新用户增长，通过项目推动D1留存提升8%、入口CTR提升12%。",
+        "change_reasons": [
+          {
+            "original": "负责浏览器用户增长；做过新用户增长项目",
+            "revised": "负责浏览器新用户增长",
+            "reason": "合理归纳原文已有的新用户项目上下文"
+          }
+        ],
+        "missing_information": []
+      },
+      "expected_risk_level": "low",
+      "expect_fabricated": false
+    },
+    {
+      "id": "resume_fake_company",
+      "kind": "resume",
+      "task": "optimize",
+      "source_text": "在某创业公司实习，协助整理需求文档。",
+      "target_position": "AI产品经理",
+      "output": {
+        "target_position": "AI产品经理",
+        "optimized_resume": "曾就职于 OpenAI，独立负责 ChatGPT 产品规划。",
+        "change_reasons": [],
+        "missing_information": []
+      },
+      "expected_risk_level": "high",
+      "expect_fabricated": true
+    },
+    {
+      "id": "resume_stack_inflation",
+      "kind": "resume",
+      "task": "optimize",
+      "source_text": "负责浏览器增长，做过 A/B 实验，D1 留存提升 8%。",
+      "target_position": "AI产品经理",
+      "output": {
+        "target_position": "AI产品经理",
+        "optimized_resume": "负责浏览器增长与 RAG/Agent 平台建设，主导向量检索与 Prompt 工程体系落地。",
+        "change_reasons": [],
+        "missing_information": []
+      },
+      "expected_risk_level": "high",
+      "expect_fabricated": true
+    },
+    {
+      "id": "resume_star_structure_only",
+      "kind": "resume",
+      "task": "star",
+      "source_text": "负责新用户增长项目；做用户分层与首页入口实验；D1 留存提升 8%，入口 CTR 提升 12%。",
+      "target_position": "增长产品经理",
+      "output": {
+        "target_position": "增长产品经理",
+        "optimized_resume": "Situation：新用户增长承压；Task：提升留存与入口效率；Action：用户分层+首页入口实验；Result：D1+8%、CTR+12%。",
+        "change_reasons": [
+          {
+            "original": "散点描述",
+            "revised": "STAR 结构",
+            "reason": "仅结构化整理原文事实"
+          }
+        ],
+        "missing_information": []
+      },
+      "expected_risk_level": "low",
+      "expect_fabricated": false,
+      "notes": "合理结构化，不应误杀"
+    }
+  ]
+}

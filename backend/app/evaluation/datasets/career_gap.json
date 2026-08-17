@@ -1,0 +1,205 @@
+{
+  "name": "Career Gap 幻觉检测集",
+  "description": "检测 Gap 分析是否虚构能力优势；空输入不得盲目高分",
+  "cases": [
+    {
+      "id": "gap_fake_rag_strength",
+      "kind": "career_gap",
+      "target_position": "AI产品经理",
+      "target_jd": "要求有 LLM/Agent 产品经验，能搭建评测闭环。",
+      "memory_context": "没有真实RAG项目经验，只上过RAG课程。做过浏览器增长与A/B。",
+      "gap": {
+        "match_score": 92,
+        "strengths": [
+          {
+            "title": "丰富RAG落地经验",
+            "reason": "做过多个RAG生产项目",
+            "evidence": []
+          }
+        ],
+        "gaps": [],
+        "recommendations": [
+          {
+            "action": "直接投递",
+            "why": "已经完全匹配"
+          }
+        ],
+        "evidence": []
+      },
+      "expected_risk_level": "high",
+      "expect_fabricated": true
+    },
+    {
+      "id": "gap_grounded_growth",
+      "kind": "career_gap",
+      "target_position": "AI产品经理",
+      "target_jd": "要求有增长或评测经验，理解指标与实验。",
+      "memory_context": "负责浏览器用户增长，A/B 实验提升次日留存8%。无真实RAG项目。",
+      "gap": {
+        "match_score": 62,
+        "strengths": [
+          {
+            "title": "增长实验与指标经验",
+            "reason": "有 A/B 与留存优化经历，可迁移到效果评测",
+            "evidence": [
+              {
+                "claim": "次日留存提升8%",
+                "source": "Career Memory"
+              }
+            ]
+          }
+        ],
+        "gaps": [
+          {
+            "title": "缺少真实 LLM/Agent 落地项目",
+            "reason": "JD 要求 Agent 产品经验，记忆中明确无 RAG 落地",
+            "evidence": [
+              {
+                "claim": "无真实RAG项目",
+                "source": "Career Memory"
+              }
+            ]
+          }
+        ],
+        "recommendations": [
+          {
+            "action": "用增长实验方法补一个可展示的评测闭环练习项目（标注为练习）",
+            "why": "对应 JD 评测闭环缺口，且不虚构履历",
+            "priority": "high"
+          }
+        ],
+        "evidence": [
+          {
+            "claim": "有增长A/B经历",
+            "source": "Career Memory"
+          },
+          {
+            "claim": "JD要求评测闭环",
+            "source": "JD"
+          }
+        ]
+      },
+      "expected_risk_level": "low",
+      "expect_fabricated": false
+    },
+    {
+      "id": "gap_empty_input_no_score",
+      "kind": "career_gap",
+      "target_position": "",
+      "target_jd": "",
+      "memory_context": "",
+      "gap": {
+        "match_score": 0,
+        "strengths": [],
+        "gaps": [],
+        "recommendations": [
+          {
+            "action": "补充目标岗位 JD 与经历后再分析",
+            "why": "信息不足，暂不评分",
+            "priority": "high"
+          }
+        ],
+        "evidence": [],
+        "summary": "信息不足，暂不评分"
+      },
+      "expected_risk_level": "not_applicable",
+      "expect_fabricated": false,
+      "notes": "空输入不得给出高匹配分或虚构优势"
+    },
+    {
+      "id": "gap_score_without_evidence",
+      "kind": "career_gap",
+      "target_position": "AI产品经理",
+      "target_jd": "要求RAG与评测经验",
+      "memory_context": "做过增长",
+      "gap": {
+        "match_score": 88,
+        "strengths": [],
+        "gaps": [],
+        "recommendations": [],
+        "evidence": [],
+        "summary": ""
+      },
+      "expected_risk_level": "medium",
+      "expect_fabricated": false,
+      "notes": "仅有分数无解释/无 evidence → 至少 medium"
+    },
+    {
+      "id": "gap_constraint_ignored",
+      "kind": "career_gap",
+      "target_position": "AI产品经理",
+      "target_jd": "要求有 RAG/Agent 落地经验",
+      "memory_context": "没有真实RAG项目经验，只上过课。做过增长 A/B。",
+      "gap": {
+        "match_score": 85,
+        "strengths": [
+          {
+            "title": "RAG 落地能力强",
+            "reason": "有生产 RAG",
+            "evidence": []
+          }
+        ],
+        "gaps": [],
+        "recommendations": [
+          {
+            "action": "直接投递",
+            "why": "已匹配",
+            "priority": "high"
+          }
+        ],
+        "evidence": []
+      },
+      "expected_risk_level": "high",
+      "expect_fabricated": true
+    },
+    {
+      "id": "gap_transferable_strength",
+      "kind": "career_gap",
+      "target_position": "AI产品经理",
+      "target_jd": "需要评测与指标意识",
+      "memory_context": "负责浏览器增长，A/B 提升 D1 留存 8%。无真实 RAG。",
+      "gap": {
+        "match_score": 58,
+        "strengths": [
+          {
+            "title": "实验与指标意识",
+            "reason": "有 A/B 与留存优化经历，可迁移到评测",
+            "evidence": [
+              {
+                "claim": "D1+8%",
+                "source": "Career Memory"
+              }
+            ]
+          }
+        ],
+        "gaps": [
+          {
+            "title": "缺少真实 Agent/RAG 项目",
+            "reason": "JD 要求落地经验，记忆明确否定",
+            "evidence": [
+              {
+                "claim": "无真实RAG",
+                "source": "Career Memory"
+              }
+            ]
+          }
+        ],
+        "recommendations": [
+          {
+            "action": "用练习项目补评测闭环并标注为练习",
+            "why": "对应缺口且不虚构履历",
+            "priority": "high"
+          }
+        ],
+        "evidence": [
+          {
+            "claim": "有增长实验",
+            "source": "Career Memory"
+          }
+        ]
+      },
+      "expected_risk_level": "low",
+      "expect_fabricated": false
+    }
+  ]
+}

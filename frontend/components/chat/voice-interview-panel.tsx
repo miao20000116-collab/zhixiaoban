@@ -45,7 +45,7 @@ type BrowserSpeechRecognition = {
   continuous: boolean;
   interimResults: boolean;
   lang: string;
-  onresult: ((event: Event & { results: SpeechRecognitionResultList }) => void) | null;
+  onresult: ((event: Event & { results: SpeechRecognitionResultList; resultIndex: number }) => void) | null;
   onerror: ((event: Event & { error?: string }) => void) | null;
   onend: (() => void) | null;
   start: () => void;

@@ -9,7 +9,10 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
       ...options,
     });
   } catch {
-    throw new ApiError("无法连接后端服务，请确认 API 已启动（通常为 http://localhost:8000）", 0);
+    throw new ApiError(
+      "无法连接后端服务。线上请确认 NEXT_PUBLIC_API_URL 已配置；本地请启动 API（http://localhost:8000）",
+      0,
+    );
   }
 
   if (!response.ok) {

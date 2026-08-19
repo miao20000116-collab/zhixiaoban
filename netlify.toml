@@ -6,8 +6,10 @@
   command = "npm run build"
   publish = ".next"
 
+[build.environment]
+  # 生产后端（Render）；构建时注入，避免前端回退到 /backend-api → localhost
+  NEXT_PUBLIC_API_URL = "https://zhixiaoban-api.onrender.com"
+  BACKEND_PROXY_URL = "https://zhixiaoban-api.onrender.com"
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-
-# 生产环境变量请在 Netlify 控制台设置，不要写死 Key：
-# NEXT_PUBLIC_API_URL = https://api.你的域名.com

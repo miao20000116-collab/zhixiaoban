@@ -32,8 +32,8 @@ class Settings(BaseSettings):
     backend_host: str = "0.0.0.0"
     backend_port: int = 8000
     cors_origins: str = (
-        "http://localhost:3000,http://localhost:3001,"
-        "http://127.0.0.1:3000,http://127.0.0.1:3001"
+        "http://localhost:3000,http://localhost:3001,http://localhost:3003,"
+        "http://127.0.0.1:3000,http://127.0.0.1:3001,http://127.0.0.1:3003"
     )
     memory_importance_threshold: int = 6
     audio_storage_dir: str = "data/audio"

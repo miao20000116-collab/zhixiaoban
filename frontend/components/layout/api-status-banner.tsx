@@ -21,9 +21,14 @@ export function ApiStatusBanner() {
   };
 
   useEffect(() => {
-    void check();
+    const boot = window.setTimeout(() => {
+      void check();
+    }, 0);
     const timer = window.setInterval(() => void check(), 60_000);
-    return () => window.clearInterval(timer);
+    return () => {
+      window.clearTimeout(boot);
+      window.clearInterval(timer);
+    };
   }, []);
 
   if (status === "checking" || status === "online") return null;

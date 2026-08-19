@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 import { Menu, PanelRight, PanelRightClose, UserCircle, X } from "lucide-react";
 
 import { CalmQuote } from "@/components/atmosphere/calm-quote";
@@ -9,7 +9,7 @@ import { SeasonSwitcher } from "@/components/atmosphere/season-switcher";
 import { ChatArea } from "@/components/chat/chat-area";
 import { ApiStatusBanner } from "@/components/layout/api-status-banner";
 import { CareerProfileCard } from "@/components/layout/career-profile-card";
-import { ConversationSidebar } from "@/components/layout/conversation-sidebar";
+import { FeatureSidebar } from "@/components/layout/feature-sidebar";
 import { ResizeHandle } from "@/components/layout/resize-handle";
 import { useChat } from "@/hooks/use-chat";
 import { useConversations } from "@/hooks/use-conversations";
@@ -27,12 +27,8 @@ export function ChatPage() {
   const {
     conversations,
     activeId,
-    isLoading: conversationsLoading,
     error: conversationsError,
     create,
-    remove,
-    rename,
-    select,
     refresh,
     applyMeta,
   } = useConversations();
@@ -100,27 +96,10 @@ export function ChatPage() {
     finishUploadTask,
   } = useChat(activeId, onMemoryUpdated, onConversationUpdated, onTaskUpdated);
 
-  const handleSelectConversation = (id: string) => {
-    select(id);
-    layout.setLeftDrawerOpen(false);
-  };
-
-  const sidebarProps = {
-    conversations,
-    activeId,
-    activeTask,
-    isLoading: conversationsLoading,
-    onSelect: handleSelectConversation,
-    onCreate: async () => {
-      await create();
-      layout.setLeftDrawerOpen(false);
-    },
-    onDelete: remove,
-    onRename: rename,
-  };
+  const activeConversation = conversations.find((conversation) => conversation.id === activeId) ?? null;
 
   return (
-    <div className="atmosphere-shell flex h-screen flex-col">
+    <div className="atmosphere-shell flex h-screen flex-col overflow-hidden">
       <header className="atmosphere-panel relative flex h-12 shrink-0 items-center gap-2 border-b px-3 sm:gap-3 sm:px-5">
         {layout.isMobile && (
           <button
@@ -178,10 +157,7 @@ export function ChatPage() {
               <span className="hidden sm:inline">画像</span>
             </button>
           )}
-          <Link
-            href="/dashboard"
-            className="rounded-md px-2 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground"
-          >
+          <Link href="/dashboard" className="rounded-md px-2 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground">
             质量看板
           </Link>
           <Link
@@ -194,13 +170,15 @@ export function ChatPage() {
         </div>
       </header>
 
-      <div className="relative flex min-h-0 flex-1">
+      <div className="relative flex min-h-0 flex-1 overflow-hidden">
         {!layout.isMobile && (
           <>
-            <ConversationSidebar
-              {...sidebarProps}
+            <FeatureSidebar
               width={layout.leftWidth}
               compact={layout.leftWidth < 210}
+              activeTask={activeTask}
+              conversationSummary={activeConversation?.summary}
+              className="h-full"
             />
             <ResizeHandle
               side="right"
@@ -274,7 +252,7 @@ export function ChatPage() {
             />
             <div className="atmosphere-panel relative z-10 flex h-full w-[min(300px,86vw)] flex-col shadow-xl">
               <div className="flex h-12 items-center justify-between border-b px-3">
-                <span className="text-sm font-medium">对话</span>
+                <span className="text-sm font-medium">导航</span>
                 <button
                   type="button"
                   onClick={() => layout.setLeftDrawerOpen(false)}
@@ -284,7 +262,12 @@ export function ChatPage() {
                   <X className="h-4 w-4" />
                 </button>
               </div>
-              <ConversationSidebar {...sidebarProps} className="min-h-0 w-full flex-1 border-r-0" />
+              <FeatureSidebar
+                className="min-h-0 w-full flex-1 border-r-0"
+                activeTask={activeTask}
+                conversationSummary={activeConversation?.summary}
+                onNavigate={() => layout.setLeftDrawerOpen(false)}
+              />
             </div>
           </div>
         )}

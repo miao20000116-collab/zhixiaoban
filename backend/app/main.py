@@ -13,6 +13,7 @@ from app.api.interview import router as interview_router
 from app.api.job import router as job_router
 from app.api.profile import router as profile_router
 from app.api.resume import router as resume_router
+from app.api.tools_ai import router as tools_ai_router
 from app.api.voice import router as voice_router
 from app.config import settings
 from app.services.dev_user import reset_current_user_hint, set_current_user_hint
@@ -55,6 +56,7 @@ app.include_router(interview_router)
 app.include_router(evaluation_router)
 app.include_router(voice_router)
 app.include_router(career_intelligence_router)
+app.include_router(tools_ai_router)
 
 # Serve persisted interview / TTS audio (skip if filesystem is read-only)
 try:

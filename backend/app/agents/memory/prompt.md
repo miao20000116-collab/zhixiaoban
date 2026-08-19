@@ -54,7 +54,7 @@
       "data": {
         "company": null,
         "position": "产品经理",
-        "responsibility": "浏览器用户增长、DAU提升与留存优化",
+        "responsibility": "智能创作助手从0到1、创作者使用率与内容生成量优化",
         "achievement": null
       }
     },

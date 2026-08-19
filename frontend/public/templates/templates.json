@@ -1,0 +1,93 @@
+[
+  {
+    "id": "classic-ats",
+    "name": "Classic / ATS",
+    "desc": "单栏无花哨，机器可解析，大公司海投最稳",
+    "ats": "友好",
+    "suitable": ["所有岗位", "大公司", "海投"]
+  },
+  {
+    "id": "ledger",
+    "name": "Ledger 学术工程",
+    "desc": "LaTeX 风衬线，公司/日期两端对齐，嵌套子弹",
+    "ats": "友好",
+    "suitable": ["软件", "数据", "工程", "学术"]
+  },
+  {
+    "id": "tech-compact",
+    "name": "Tech 紧凑",
+    "desc": "高信息密度+等宽点缀，多项目塞一页",
+    "ats": "尚可",
+    "suitable": ["工程师", "技术岗"]
+  },
+  {
+    "id": "modern-sidebar",
+    "name": "Modern 侧栏",
+    "desc": "双栏+深色侧边栏，现代感强",
+    "ats": "一般",
+    "suitable": ["产品", "设计", "市场"]
+  },
+  {
+    "id": "pillar",
+    "name": "Pillar 信息卡",
+    "desc": "Enhancv 风，蓝点缀+技能胶囊+语言进度条",
+    "ats": "一般",
+    "suitable": ["产品经理", "市场", "PM"]
+  },
+  {
+    "id": "elegant-serif",
+    "name": "Elegant 衬线",
+    "desc": "衬线居中编辑风，偏人文",
+    "ats": "一般",
+    "suitable": ["设计", "咨询", "市场"]
+  },
+  {
+    "id": "atelier",
+    "name": "Atelier 极简",
+    "desc": "大量留白+细字大写名+竖线分栏",
+    "ats": "一般",
+    "suitable": ["设计", "创意", "审美岗"]
+  },
+  {
+    "id": "timeline",
+    "name": "Timeline 时间轴",
+    "desc": "左侧竖向时间轴脊柱，职业成长轨迹一目了然",
+    "ats": "一般",
+    "suitable": ["综合岗", "管理岗"]
+  },
+  {
+    "id": "swiss",
+    "name": "Swiss 栅格",
+    "desc": "瑞士栅格，粗体 Helvetica + 红点缀",
+    "ats": "一般",
+    "suitable": ["设计", "品牌", "创意"]
+  },
+  {
+    "id": "executive",
+    "name": "Executive 高管",
+    "desc": "藏青衬线，稳重有分量",
+    "ats": "一般",
+    "suitable": ["金融", "咨询", "高管"]
+  },
+  {
+    "id": "editorial-banner",
+    "name": "Editorial 刊物",
+    "desc": "三栏刊物式顶部 + 红衬线 + 底部色带",
+    "ats": "一般",
+    "suitable": ["品牌", "内容", "编辑"]
+  },
+  {
+    "id": "photo-corporate",
+    "name": "Photo Corporate",
+    "desc": "深色 banner + 圆形头像 + 技能进度条",
+    "ats": "一般",
+    "suitable": ["营销", "商务", "项目"]
+  },
+  {
+    "id": "photo-minimal",
+    "name": "Photo Minimal",
+    "desc": "红点缀 + 分体衬线名字 + 圆形头像",
+    "ats": "一般",
+    "suitable": ["设计", "创作", "Portfolio"]
+  }
+]

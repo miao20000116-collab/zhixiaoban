@@ -1,5 +1,5 @@
 # 职小伴前端 · Netlify 部署配置
-# 文档：docs/DEPLOY-ORACLE.md（Netlify 前端 + Oracle 后端）
+# 前端在 Netlify，后端在腾讯云
 
 [build]
   base = "frontend"
@@ -7,9 +7,8 @@
   publish = ".next"
 
 [build.environment]
-  # 生产后端（Render）；构建时注入，避免前端回退到 /backend-api → localhost
-  NEXT_PUBLIC_API_URL = "https://zhixiaoban-api.onrender.com"
-  BACKEND_PROXY_URL = "https://zhixiaoban-api.onrender.com"
+  NEXT_PUBLIC_API_URL = "http://134.175.147.230:8000"
+  BACKEND_PROXY_URL = "http://134.175.147.230:8000"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

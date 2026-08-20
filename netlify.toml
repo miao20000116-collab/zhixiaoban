@@ -1,5 +1,5 @@
-# 职小伴前端 · Netlify 部署配置
-# 前端在 Netlify，后端在腾讯云
+# 职小伴前端 · Netlify
+# 浏览器只访问同源 /backend-api（HTTPS），由 Netlify 转发到腾讯云 HTTP 后端
 
 [build]
   base = "frontend"
@@ -7,8 +7,14 @@
   publish = ".next"
 
 [build.environment]
-  NEXT_PUBLIC_API_URL = "http://134.175.147.230:8000"
+  NEXT_PUBLIC_API_URL = "/backend-api"
   BACKEND_PROXY_URL = "http://134.175.147.230:8000"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+[[redirects]]
+  from = "/backend-api/*"
+  to = "http://134.175.147.230:8000/:splat"
+  status = 200
+  force = true
